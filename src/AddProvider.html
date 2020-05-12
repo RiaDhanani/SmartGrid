@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>New Provider</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+            <div class="header clearfix">
+                <br><br><br><br>
+                <h4 class="text-center" id="current_account_prodreg"></h4>
+            </div>
+            <br>
+            <form action="index.html">
+              <div class="form-group">
+                <label for="Cluster Number">Cluster Number:</label>
+                <input type="number" class="form-control" id="cluster_no" placeholder="Enter Cluster Number" name="cluster_no">
+              </div>
+
+	      <div class="form-group">
+                <label for="CPU">CPU:</label>
+                <input type="number" class="form-control" id="CPU" placeholder="Enter CPU" name="CPU">
+              </div>
+
+
+              <div class="form-group">
+                <label for="energyRemaining">Energy Remaining:</label>
+                <input type="number" class="form-control" id="energyRemaining" placeholder="Enter remaining energy" name="energyRemaining">
+              </div>
+
+                <div class="form-group">
+                  <label for="storageCapacity">Enter storage capacity:</label>
+                  <input type="number" class="form-control" id="storageCapacity" placeholder="Enter storage capacity" name="storageCapacity">
+                </div>
+
+
+              <button type="button" class="btn btn-primary" id="reg_provid_sol">Register</button>
+            </form>
+        </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+    
+    $("#reg_provid_sol").click(async function() {
+      window.location.replace("ProviderPage.html");
+    });
+    
+
+    var docElm = document.documentElement;
+    /*if (docElm.requestFullscreen) {
+        docElm.requestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+    else if (docElm.mozRequestFullScreen) {
+    docElm.mozRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+    else if (docElm.webkitRequestFullScreen) {
+        docElm.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }*/
+    </script>
+  </body>
+  </html>

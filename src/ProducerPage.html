@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>SmartGrid Dapp</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart library -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  </head>
+  <body>
+    <div id="show_event" style="position:absolute;top:37px;right:-410px;width: 400px; height: 92px; border-radius: 10px 10px 10px 10px;position: fixed;color: white;padding-right: 10px;background: #31708f;text-align: center;overflow: hidden;border: 1px solid;margin:0 auto;">
+      <span  id="showmessage_text" style="float: left;padding: 10px; font-weight: bold;"></span>
+    </div>
+    <div class="container>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+          <h1 class="text-center">Producer</h1>
+          <h5 class="text-center" id="ENTT">Entity : </h5>
+          <h5 class="text-center" id="current_account">Current user account : </h5>
+          <hr/>
+          <br/>
+        </div>
+      </div>
+
+      <div id="proposalsRow" class="row">
+      </div>
+    </div>
+
+  <center>
+  <div class="">
+<!--------------------------------------------------------------------------------------------------------------------------->
+<div class="column" style="float: left;width: 33%;padding: 10px;height: 300px; border-right: 1px solid #00000040">
+  <h3>Energy Stats</h3>
+  <!--<div id="chart" style="height: 300px; width: 100%;"></div> -->
+  <div>
+    <button id="checkSC" type="button" class="btn btn-primary" style="margin-top: 20px;">Check Storage Capacity</button>
+    <br>
+    <input disabled type="text" id="displaySC" style="margin-top: 25px;" name="" value="">
+    <br>
+    <button id="checkBalance" type="button" class="btn btn-primary" style="margin-top: 20px;">Check Balance</button>
+    <br>
+    <input disabled type="text" id="displayBalance" style="margin-top: 25px;" name="" value="">
+    <!-- Temporary Button for now -->
+    <br>
+    <button style="margin-top : 25px" id="checkRemaining" class="btn btn-primary" type="button" name="button">Check Remaining Energy</button>
+    <br>
+    <input disabled type="text" id="displayER" style="margin-top: 25px;" name="" value="">
+  </div>
+</div>
+
+
+<div class="column" style="float: left;width: 33%;padding: 10px;height: 300px; border-right: 1px solid #00000040">
+  <h3>Produce Energy</h3>
+  <div class="">
+    <button type="submit" class="btn btn-primary" id="produce-energy">Produce</button>
+    <input type="text" style="margin-top: 40px;" name="energy" id="energy">
+  </div>
+  <div class="">
+    <button type="submit" class="btn btn-primary" id="set-cpu">Set CPU</button>
+    <input type="text" style="margin-top: 40px;" name="CPU" id="CPU">
+  </div>
+  <div class="">
+    <button type="submit" class="btn btn-primary" id="add-crypto-coins">Add Cryptocoins</button>
+    <input type="text" style="margin-top: 40px;" name="amnt" id="amnt">
+  </div>
+</div>
+
+<div class="column" id="send_coin" style="float: left;width: 30%;padding: 10px;height: 300px;">
+  <h2>Send Energy</h2>
+  <div style="margin-top: 40px;">
+        <span> To : </span>
+        <select id="enter_send_address" value="">
+          <option value="">Please select an account</option>
+        </select>
+  </div>
+  <div>
+    <span>Amount : </span>
+    <input type="number" id="send_amount" style="margin-top: 40px;" >
+  </div>
+  <button style="margin-top: 40px;" class="btn btn-primary" type="button" id="send_money">Send</button>
+</div>
+
+
+	</div>
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+
+<!--------------------------------------------------------------------------------------------------------------------------->
+
+</center>
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed 
+    <script src="js/d3js.js"></script> -->
+    <link rel="stylesheet" href="css/d3css.css">
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/producer.js"></script>
+
+    <script>
+    var docElm = document.documentElement;
+    if (docElm.requestFullscreen) {
+        docElm.requestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+    else if (docElm.mozRequestFullScreen) {
+    docElm.mozRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+    else if (docElm.webkitRequestFullScreen) {
+        docElm.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+    </script>
+  </body>
+</html>
