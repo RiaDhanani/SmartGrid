@@ -68,6 +68,10 @@ App = {
     $(document).on('click', '#add-crypto-coins', function(){ 
       App.addMoneyToAccount(jQuery('#amnt').val()); 
       });
+    
+    $(document).on('click', '#checkCPU', function(){ 
+      App.getCostPerUnit(jQuery('#adr').val()); 
+      });
 
       $(document).on('click', '#checkSC', function(){ 
         App.getStorageCapacity(jQuery('#adr').val()); 
@@ -124,8 +128,18 @@ App = {
       }).then(function(result){
       if(result.receipt.status == '0x01')
       {
-        alert("CPU added by provider : "+price);
-        alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
+        //alert("CPU added by provider : "+price);
+        //alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
+        for (var i = 0; i < result.logs.length; i++) {
+          var log = result.logs[i];
+      if (log.event == "UpdatedCPU") {
+        var text = 'Updated CPU : ' + price + ' by ' + web3.eth.coinbase;
+        jQuery('#showmessage_text').html(text);
+        jQuery('#show_event').animate({'right':'10px'});
+        setTimeout(function(){jQuery('#show_event').animate({'right':'-410px'},500)}, 15000);
+        break;
+      }
+    }
        }
      else
       {
@@ -136,6 +150,26 @@ App = {
         })
       
     },
+  
+    getCostPerUnit : function(){
+        var nrginstance;
+        App.contracts.vote.deployed().then(function(instance){
+          nrginstance = instance;
+          return nrginstance.checkMoneyCPUEnergyBalance();
+        }).then(function(result){
+          App.CPU = result[1].toNumber(); 
+          console.log(App.CPU);
+        if(App.CPU === result[1].toNumber())
+        {
+          //alert("Producer Balance : "+App.MoneyBalance);
+          $('#displayCPU').val(App.CPU);
+        }
+        else
+        {
+          alert("Creation failed");
+        }	
+        })
+      },
 
     checkMoneyCPUEnergyBalance : function(){
       var nrginstance;
@@ -306,8 +340,18 @@ App = {
           }).then(function(result){
           if(result.receipt.status == '0x01')
           {
-            alert("Cryptocoins added by producer : "+amnt);
-            alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
+            //alert("Cryptocoins added by producer : "+amnt);
+            //alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
+            for (var i = 0; i < result.logs.length; i++) {
+              var log = result.logs[i];
+          if (log.event == "CryptocoinsAdded") {
+            var text = 'Cryprtocoins Added : ' + amnt + ' by ' + web3.eth.coinbase;
+            jQuery('#showmessage_text').html(text);
+            jQuery('#show_event').animate({'right':'10px'});
+            setTimeout(function(){jQuery('#show_event').animate({'right':'-410px'},500)}, 15000);
+            break;
+          }
+        }
            }
          else
           {
