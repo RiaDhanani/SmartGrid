@@ -32,7 +32,9 @@ cd src/
 truffle develop
 ```
 Open another instance of command prompt/terminal and navigate to the src directory
-
+```
+truffle compile
+```
 ```
 truffle migrate --reset
 ```
