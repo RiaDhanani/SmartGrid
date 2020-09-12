@@ -54,10 +54,6 @@ App = {
     App.setCPU(jQuery('#CPU').val()); 
     });
 
-    $(document).on('click', '#checkCPU', function(){ 
-    App.getCostPerUnit(jQuery('#adr').val()); 
-    });
-    
     $(document).on('click', '#add-crypto-coins', function(){ 
     App.addMoneyToAccount(jQuery('#amnt').val()); 
     });
@@ -65,6 +61,10 @@ App = {
     $(document).on('click', '#checkBalance', function(){ 
     App.checkMoneyCPUEnergyBalance(); 
     });
+
+    $(document).on('click', '#checkCPU', function(){ 
+      App.getCostPerUnit(jQuery('#adr').val()); 
+      });
         
     $(document).on('click', '#checkRemaining', function(){ 
       App.getRemainingEnergy(jQuery('#adr').val()); 
@@ -182,26 +182,6 @@ App = {
           })
         
       },
-  
-      getCostPerUnit : function(){
-          var nrginstance;
-          App.contracts.vote.deployed().then(function(instance){
-            nrginstance = instance;
-            return nrginstance.checkMoneyCPUEnergyBalance();
-          }).then(function(result){
-            App.CPU = result[1].toNumber(); 
-            console.log(App.CPU);
-          if(App.CPU === result[1].toNumber())
-          {
-            //alert("Producer Balance : "+App.MoneyBalance);
-            $('#displayCPU').val(App.CPU);
-          }
-          else
-          {
-            alert("Creation failed");
-          }	
-          })
-        },
 
       getRemainingEnergy : function(adr){
         adr = App.currentAccount;
@@ -255,8 +235,6 @@ App = {
           }).then(function(result){
           if(result.receipt.status == '0x01')
           {
-            //alert("Cryptocoins added by producer : "+amnt);
-            //alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
             for (var i = 0; i < result.logs.length; i++) {
               var log = result.logs[i];
           if (log.event == "CryptocoinsAdded") {
@@ -267,6 +245,8 @@ App = {
             break;
           }
         }
+            //lert("Cryptocoins added by producer : "+amnt);
+            //alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
            }
          else
           {
@@ -298,6 +278,26 @@ App = {
           }	
           }).catch(function(err){
           console.log(err.message);
+          })
+        },
+
+        getCostPerUnit : function(){
+          var nrginstance;
+          App.contracts.vote.deployed().then(function(instance){
+            nrginstance = instance;
+            return nrginstance.checkMoneyCPUEnergyBalance();
+          }).then(function(result){
+            App.CPU = result[1].toNumber(); 
+            console.log(App.CPU);
+          if(App.CPU === result[1].toNumber())
+          {
+            //alert("Producer Balance : "+App.MoneyBalance);
+            $('#displayCPU').val(App.CPU);
+          }
+          else
+          {
+            alert("Creation failed");
+          }	
           })
         },
 
