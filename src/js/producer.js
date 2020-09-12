@@ -54,6 +54,10 @@ App = {
     App.setCPU(jQuery('#CPU').val()); 
     });
 
+    $(document).on('click', '#checkCPU', function(){ 
+    App.getCostPerUnit(jQuery('#adr').val()); 
+    });
+    
     $(document).on('click', '#add-crypto-coins', function(){ 
     App.addMoneyToAccount(jQuery('#amnt').val()); 
     });
@@ -168,6 +172,26 @@ App = {
           })
         
       },
+  
+      getCostPerUnit : function(){
+          var nrginstance;
+          App.contracts.vote.deployed().then(function(instance){
+            nrginstance = instance;
+            return nrginstance.checkMoneyCPUEnergyBalance();
+          }).then(function(result){
+            App.CPU = result[1].toNumber(); 
+            console.log(App.CPU);
+          if(App.CPU === result[1].toNumber())
+          {
+            //alert("Producer Balance : "+App.MoneyBalance);
+            $('#displayCPU').val(App.CPU);
+          }
+          else
+          {
+            alert("Creation failed");
+          }	
+          })
+        },
 
       getRemainingEnergy : function(adr){
         adr = App.currentAccount;
