@@ -57,6 +57,10 @@ App = {
     App.getCPU(jQuery('#get_cpu_address').val()); 
     });
 
+    $(document).on('click', '#checkCPU', function(){ 
+      App.getCostPerUnit(jQuery('#adr').val()); 
+      });
+
     $(document).on('click', '#checkRemaining', function(){ 
       App.getRemainingEnergy(jQuery('#adr').val()); 
       });
@@ -67,10 +71,6 @@ App = {
 
     $(document).on('click', '#add-crypto-coins', function(){ 
       App.addMoneyToAccount(jQuery('#amnt').val()); 
-      });
-    
-    $(document).on('click', '#checkCPU', function(){ 
-      App.getCostPerUnit(jQuery('#adr').val()); 
       });
 
       $(document).on('click', '#checkSC', function(){ 
@@ -150,26 +150,6 @@ App = {
         })
       
     },
-  
-    getCostPerUnit : function(){
-        var nrginstance;
-        App.contracts.vote.deployed().then(function(instance){
-          nrginstance = instance;
-          return nrginstance.checkMoneyCPUEnergyBalance();
-        }).then(function(result){
-          App.CPU = result[1].toNumber(); 
-          console.log(App.CPU);
-        if(App.CPU === result[1].toNumber())
-        {
-          //alert("Producer Balance : "+App.MoneyBalance);
-          $('#displayCPU').val(App.CPU);
-        }
-        else
-        {
-          alert("Creation failed");
-        }	
-        })
-      },
 
     checkMoneyCPUEnergyBalance : function(){
       var nrginstance;
@@ -227,6 +207,26 @@ App = {
             console.log(err.message);
           })
         
+      },
+
+      getCostPerUnit : function(){
+        var nrginstance;
+        App.contracts.vote.deployed().then(function(instance){
+          nrginstance = instance;
+          return nrginstance.checkMoneyCPUEnergyBalance();
+        }).then(function(result){
+          App.CPU = result[1].toNumber(); 
+          console.log(App.CPU);
+        if(App.CPU === result[1].toNumber())
+        {
+          //alert("Producer Balance : "+App.MoneyBalance);
+          $('#displayCPU').val(App.CPU);
+        }
+        else
+        {
+          alert("Creation failed");
+        }	
+        })
       },
 
       getStorageCapacity : function(adr){
@@ -309,7 +309,7 @@ App = {
         }).then( function(result){
           if(result.receipt.status == '0x01') {
             console.log(result);
-            alert("Transfer successful");
+            //alert("Transfer successful");
             for (var i = 0; i < result.logs.length; i++) {
               var log = result.logs[i];
               var singularText = "units of energy were";
