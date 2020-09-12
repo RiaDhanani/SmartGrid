@@ -46,6 +46,9 @@ contract NRG{
     event EnergySent(address from, address to, uint energy);
     event EnergyDemanded(address from, address to, uint energy);
     event EnergyProduced(uint energy);
+    event UpdatedCPU(uint price);
+    event CryptocoinsAdded(uint amnt);
+    event EnergyConsumed(uint inputenergy);
    
     function getEntity() public view returns (uint8) {
         return (Entity[msg.sender]);
@@ -78,10 +81,13 @@ contract NRG{
        
         if (Entity[msg.sender] == 1){
             producer[msg.sender].CPU = _price;
+            UpdatedCPU(_price);
         }else if(Entity[msg.sender] == 2){
             provider[msg.sender].CPU = _price;
+            UpdatedCPU(_price);
         }else{
             consumer[msg.sender].CPU = _price;
+            UpdatedCPU(_price);
         }
     }
    
@@ -159,10 +165,13 @@ contract NRG{
        
         if (Entity[msg.sender] == 1){
             producer[msg.sender].MoneyBalance += _amnt;
+            CryptocoinsAdded(_amnt);
         }else if(Entity[msg.sender] == 2){
             provider[msg.sender].MoneyBalance += _amnt;
+            CryptocoinsAdded(_amnt);
         }else{
             consumer[msg.sender].MoneyBalance += _amnt;
+            CryptocoinsAdded(_amnt);
         }
        
     }
@@ -321,6 +330,7 @@ contract NRG{
         require(Entity[msg.sender]==3);
         consumer[msg.sender].energyRemaining -= _uintsOfEnergyConsumed;
         consumer[msg.sender].TotalEC += _uintsOfEnergyConsumed;
+        EnergyConsumed(_uintsOfEnergyConsumed);
     }
    
    
