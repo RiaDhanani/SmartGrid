@@ -69,6 +69,10 @@ App = {
     $(document).on('click', '#get-cpu', function(){ 
     App.getCPU(jQuery('#get_cpu_address').val()); 
     });
+
+    $(document).on('click', '#checkCPU', function(){ 
+      App.getCostPerUnit(jQuery('#adr').val()); 
+      });
         
     $(document).on('click', '#checkRemaining', function(){ 
       App.getRemainingEnergy(jQuery('#adr').val()); 
@@ -134,8 +138,18 @@ App = {
       }).then(function(result){
       if(result.receipt.status == '0x01')
       {
-        alert("CPU added by consumer : "+price);
-        alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
+        for (var i = 0; i < result.logs.length; i++) {
+          var log = result.logs[i];
+      if (log.event == "UpdatedCPU") {
+        var text = 'Updated CPU : ' + price + ' by ' + web3.eth.coinbase;
+        jQuery('#showmessage_text').html(text);
+        jQuery('#show_event').animate({'right':'10px'});
+        setTimeout(function(){jQuery('#show_event').animate({'right':'-410px'},500)}, 15000);
+        break;
+      }
+    }
+        //alert("CPU added by consumer : "+price);
+        //alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
        }
      else
       {
@@ -169,6 +183,26 @@ App = {
         
       },
 
+      getCostPerUnit : function(){
+        var nrginstance;
+        App.contracts.vote.deployed().then(function(instance){
+          nrginstance = instance;
+          return nrginstance.checkMoneyCPUEnergyBalance();
+        }).then(function(result){
+          App.CPU = result[1].toNumber(); 
+          console.log(App.CPU);
+        if(App.CPU === result[1].toNumber())
+        {
+          //alert("Producer Balance : "+App.MoneyBalance);
+          $('#displayCPU').val(App.CPU);
+        }
+        else
+        {
+          alert("Creation failed");
+        }	
+        })
+      },
+
 
       consumeEnergy : function(inputenergy){
         var nrginstance;
@@ -178,7 +212,17 @@ App = {
           }).then(function(result){
           if(result.receipt.status == '0x01')
           {
-            alert("Energy consumed : "+inputenergy);
+            //alert("Energy consumed : "+inputenergy);
+            for (var i = 0; i < result.logs.length; i++) {
+              var log = result.logs[i];
+          if (log.event == "EnergyConsumed") {
+            var text = 'Consumed energy : ' + inputenergy + ' by ' + web3.eth.coinbase;
+            jQuery('#showmessage_text').html(text);
+            jQuery('#show_event').animate({'right':'10px'});
+            setTimeout(function(){jQuery('#show_event').animate({'right':'-410px'},500)}, 15000);
+            break;
+          }
+        }
            }
          else
           {
@@ -339,7 +383,7 @@ App = {
         }).then( function(result){
           if(result.receipt.status == '0x01') {
             console.log(result);
-            alert("Transfer successful");
+            //alert("Transfer successful");
             for (var i = 0; i < result.logs.length; i++) {
               var log = result.logs[i];
               var singularText = "units of energy were";
@@ -370,8 +414,18 @@ App = {
           }).then(function(result){
           if(result.receipt.status == '0x01')
           {
-            alert("Cryptocoins added by consumer : "+amnt);
-            alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
+            for (var i = 0; i < result.logs.length; i++) {
+              var log = result.logs[i];
+          if (log.event == "CryptocoinsAdded") {
+            var text = 'Cryprtocoins Added : ' + amnt + ' by ' + web3.eth.coinbase;
+            jQuery('#showmessage_text').html(text);
+            jQuery('#show_event').animate({'right':'10px'});
+            setTimeout(function(){jQuery('#show_event').animate({'right':'-410px'},500)}, 15000);
+            break;
+          }
+        }
+            //alert("Cryptocoins added by consumer : "+amnt);
+            //alert("Entity of "+App.currentAccount+" is "+nrginstance.getEntity().toNumber());
            }
          else
           {
